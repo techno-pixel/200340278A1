@@ -1,0 +1,9 @@
+C:\Users\jadno\OneDrive\school\winter 2020\c#\assignment1\200340278A1\bin\Debug\ChangeCalculator.exe.config
+C:\Users\jadno\OneDrive\school\winter 2020\c#\assignment1\200340278A1\bin\Debug\ChangeCalculator.exe
+C:\Users\jadno\OneDrive\school\winter 2020\c#\assignment1\200340278A1\bin\Debug\ChangeCalculator.pdb
+C:\Users\jadno\OneDrive\school\winter 2020\c#\assignment1\200340278A1\obj\Debug\200340278A1.csprojAssemblyReference.cache
+C:\Users\jadno\OneDrive\school\winter 2020\c#\assignment1\200340278A1\obj\Debug\ChangeCalculator.ChangeCalculator.resources
+C:\Users\jadno\OneDrive\school\winter 2020\c#\assignment1\200340278A1\obj\Debug\ChangeCalculator.Properties.Resources.resources
+C:\Users\jadno\OneDrive\school\winter 2020\c#\assignment1\200340278A1\obj\Debug\200340278A1.csproj.GenerateResource.cache
+C:\Users\jadno\OneDrive\school\winter 2020\c#\assignment1\200340278A1\obj\Debug\ChangeCalculator.exe
+C:\Users\jadno\OneDrive\school\winter 2020\c#\assignment1\200340278A1\obj\Debug\ChangeCalculator.pdb
