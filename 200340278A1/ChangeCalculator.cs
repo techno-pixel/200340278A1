@@ -34,18 +34,10 @@ namespace ChangeCalculator
         private void calcBtn_Click(object sender, EventArgs e)
         {
             // if the total input is empty, show a message box indicating to enter a total amount
-            if (this.totalInput.Text.Length < this.totalInput.SelectionStart + 1)
-                MessageBox.Show("Please enter a positive number for your total amount");
+            //if (this.totalInput.Text.Length < this.totalInput.SelectionStart + 1)
+               // MessageBox.Show("Please enter a positive number for your total amount");
 
             CalculateChange();
-        }
-
-        /// <summary>
-        /// Calculates the total and paid amount to dispense change
-        /// </summary>
-        private void CalculateChange()
-        {
-            
         }
 
         /// <summary>
@@ -78,14 +70,6 @@ namespace ChangeCalculator
             
         }
         #endregion
-
-    
-
-        private void ChangeCalculator_Load(object sender, EventArgs e)
-        {
-
-        }
-
 
         #region Labels
         private void total_Click(object sender, EventArgs e)
@@ -162,5 +146,107 @@ namespace ChangeCalculator
         }
         #endregion
 
+        #region Other Methods
+        /// <summary>
+        /// Calculates the total and paid amount to dispense change
+        /// </summary>
+        private void CalculateChange()
+        {
+            OperationType myEnum = (decimal)OperationType.Minus;
+
+            this.changeOutput.Text = ParseOperation();
+        }
+
+        /// <summary>
+        /// Parses user equation and calculates the result
+        /// </summary>
+        /// <returns></returns>
+        private string ParseOperation()
+        {
+            try
+            {
+                // Get the users inputs
+                var userTotalInput = this.totalInput.Text;
+                var userPaidInput = this.paidInput.Text;
+
+                // Remove all spaces
+                userTotalInput = userTotalInput.Replace(" ", "");
+                userPaidInput = userPaidInput.Replace(" ", "");
+
+                // create a new operation
+                var operation = new Operation();
+                var leftSide = true;
+
+                for(int i = 0; i < userTotalInput.Length; i++)
+                {
+                    if("0123456789.".Any(characters => userTotalInput[i] == characters))
+                    {
+                        if(leftSide)
+                        {
+                            operation.LeftSide += userTotalInput[i];
+                        }
+                    }
+                }
+
+                return string.Empty;
+            }
+            catch(Exception ex)
+            {
+                return $"Invalid equation. {ex.Message}";
+            }
+        }
+
+        /// <summary>
+        /// Checking for valid characters
+        /// </summary>
+        /// <param name="currentNumber"></param>
+        /// <param name="newCharacter"></param>
+        /// <returns></returns>
+        private string AddNumberPart(string currentNumber, char newCharacter)
+        {
+            // check if there is already a radix in the input
+            if(newCharacter == '.' && currentNumber.Contains('.'))
+            {
+                throw new InvalidOperationException($"Number {currentNumber} already contains a . and another cannot be added");
+            } return currentNumber + newCharacter;
+        }
+
+
+
+        public enum OperationType
+        {
+            /// <summary>
+            /// Find the differance between paid amount and total amount
+            /// </summary>
+            Minus
+        }
+        #endregion
+
+        private void ChangeCalculator_Load(object sender, EventArgs e)
+        {
+
+        }
+    }
+
+    public class Operation
+    {
+
+        // left side of operation
+        public string LeftSide { get; set; }
+
+        // right side of operation
+        public string RightSide { get; set; }
+       
+        // type of operation to perform
+        public OperationType OperationType { get; set; }
+
+        public Operation InnerOperation { get; set; }
+
+        // create empty strings instead of nulls
+        public Operation()
+        {
+            this.LeftSide = string.Empty;
+            this.RightSide = string.Empty;
+        }
     }
 }
