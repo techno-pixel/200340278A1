@@ -50,15 +50,19 @@
             // 
             // clearBtn
             // 
+            this.clearBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.clearBtn.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.clearBtn.Location = new System.Drawing.Point(233, 108);
             this.clearBtn.Name = "clearBtn";
             this.clearBtn.Size = new System.Drawing.Size(57, 23);
             this.clearBtn.TabIndex = 0;
             this.clearBtn.Text = "Clear";
             this.clearBtn.UseVisualStyleBackColor = true;
+            this.clearBtn.Click += new System.EventHandler(this.clearBtn_Click);
             // 
             // calcBtn
             // 
+            this.calcBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.calcBtn.Location = new System.Drawing.Point(12, 108);
             this.calcBtn.Name = "calcBtn";
             this.calcBtn.Size = new System.Drawing.Size(75, 23);
@@ -69,6 +73,7 @@
             // 
             // tooniesOutput
             // 
+            this.tooniesOutput.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.tooniesOutput.Location = new System.Drawing.Point(13, 71);
             this.tooniesOutput.Name = "tooniesOutput";
             this.tooniesOutput.ReadOnly = true;
@@ -78,6 +83,7 @@
             // 
             // looniesOutput
             // 
+            this.looniesOutput.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.looniesOutput.Location = new System.Drawing.Point(68, 71);
             this.looniesOutput.Name = "looniesOutput";
             this.looniesOutput.ReadOnly = true;
@@ -87,30 +93,37 @@
             // 
             // quartersOutput
             // 
+            this.quartersOutput.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.quartersOutput.Location = new System.Drawing.Point(123, 71);
             this.quartersOutput.Name = "quartersOutput";
             this.quartersOutput.ReadOnly = true;
             this.quartersOutput.Size = new System.Drawing.Size(53, 20);
             this.quartersOutput.TabIndex = 4;
+            this.quartersOutput.TextChanged += new System.EventHandler(this.quartersOutput_TextChanged);
             // 
             // dimesOutput
             // 
+            this.dimesOutput.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.dimesOutput.Location = new System.Drawing.Point(179, 71);
             this.dimesOutput.Name = "dimesOutput";
             this.dimesOutput.ReadOnly = true;
             this.dimesOutput.Size = new System.Drawing.Size(53, 20);
             this.dimesOutput.TabIndex = 5;
+            this.dimesOutput.TextChanged += new System.EventHandler(this.dimesOutput_TextChanged);
             // 
             // nickelOutput
             // 
+            this.nickelOutput.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.nickelOutput.Location = new System.Drawing.Point(235, 71);
             this.nickelOutput.Name = "nickelOutput";
             this.nickelOutput.ReadOnly = true;
             this.nickelOutput.Size = new System.Drawing.Size(53, 20);
             this.nickelOutput.TabIndex = 6;
+            this.nickelOutput.TextChanged += new System.EventHandler(this.nickelOutput_TextChanged);
             // 
             // totalInput
             // 
+            this.totalInput.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.totalInput.Location = new System.Drawing.Point(13, 23);
             this.totalInput.Name = "totalInput";
             this.totalInput.Size = new System.Drawing.Size(53, 20);
@@ -119,6 +132,7 @@
             // 
             // paidInput
             // 
+            this.paidInput.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.paidInput.Location = new System.Drawing.Point(68, 23);
             this.paidInput.Name = "paidInput";
             this.paidInput.Size = new System.Drawing.Size(53, 20);
@@ -127,6 +141,7 @@
             // 
             // changeOutput
             // 
+            this.changeOutput.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.changeOutput.Location = new System.Drawing.Point(123, 23);
             this.changeOutput.Name = "changeOutput";
             this.changeOutput.ReadOnly = true;
@@ -136,52 +151,62 @@
             // 
             // nickels
             // 
+            this.nickels.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.nickels.AutoSize = true;
             this.nickels.Location = new System.Drawing.Point(232, 55);
             this.nickels.Name = "nickels";
             this.nickels.Size = new System.Drawing.Size(42, 13);
             this.nickels.TabIndex = 10;
             this.nickels.Text = "Nickels";
+            this.nickels.Click += new System.EventHandler(this.nickels_Click);
             // 
             // dimes
             // 
+            this.dimes.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.dimes.AutoSize = true;
             this.dimes.Location = new System.Drawing.Point(176, 55);
             this.dimes.Name = "dimes";
             this.dimes.Size = new System.Drawing.Size(36, 13);
             this.dimes.TabIndex = 11;
             this.dimes.Text = "Dimes";
+            this.dimes.Click += new System.EventHandler(this.dimes_Click);
             // 
             // quarters
             // 
+            this.quarters.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.quarters.AutoSize = true;
             this.quarters.Location = new System.Drawing.Point(120, 55);
             this.quarters.Name = "quarters";
             this.quarters.Size = new System.Drawing.Size(47, 13);
             this.quarters.TabIndex = 12;
             this.quarters.Text = "Quarters";
+            this.quarters.Click += new System.EventHandler(this.quarters_Click);
             // 
             // loonies
             // 
+            this.loonies.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.loonies.AutoSize = true;
             this.loonies.Location = new System.Drawing.Point(65, 55);
             this.loonies.Name = "loonies";
             this.loonies.Size = new System.Drawing.Size(44, 13);
             this.loonies.TabIndex = 13;
             this.loonies.Text = "Loonies";
+            this.loonies.Click += new System.EventHandler(this.loonies_Click);
             // 
             // toonies
             // 
+            this.toonies.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.toonies.AutoSize = true;
             this.toonies.Location = new System.Drawing.Point(12, 55);
             this.toonies.Name = "toonies";
             this.toonies.Size = new System.Drawing.Size(45, 13);
             this.toonies.TabIndex = 14;
             this.toonies.Text = "Toonies";
-            this.toonies.Click += new System.EventHandler(this.Toonies_Click);
+            this.toonies.Click += new System.EventHandler(this.toonies_Click);
             // 
             // total
             // 
+            this.total.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.total.AutoSize = true;
             this.total.Location = new System.Drawing.Point(12, 7);
             this.total.Name = "total";
@@ -192,26 +217,32 @@
             // 
             // paid
             // 
+            this.paid.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.paid.AutoSize = true;
             this.paid.Location = new System.Drawing.Point(65, 7);
             this.paid.Name = "paid";
             this.paid.Size = new System.Drawing.Size(28, 13);
             this.paid.TabIndex = 16;
             this.paid.Text = "Paid";
+            this.paid.Click += new System.EventHandler(this.paid_Click);
             // 
             // change
             // 
+            this.change.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.change.AutoSize = true;
             this.change.Location = new System.Drawing.Point(120, 7);
             this.change.Name = "change";
             this.change.Size = new System.Drawing.Size(44, 13);
             this.change.TabIndex = 17;
             this.change.Text = "Change";
+            this.change.Click += new System.EventHandler(this.change_Click);
             // 
             // ChangeCalculator
             // 
+            this.AcceptButton = this.calcBtn;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.clearBtn;
             this.ClientSize = new System.Drawing.Size(299, 143);
             this.Controls.Add(this.change);
             this.Controls.Add(this.paid);
