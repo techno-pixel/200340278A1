@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,11 +12,23 @@ using System.Windows.Forms;
 namespace ChangeCalculator
 {
 
+
+    public enum operation
+    {
+        /// <summary>
+        /// Operation Types
+        /// </summary>
+        Subtract,
+        Split
+    }
+
     /// <summary>
     /// A Change Calculator
     /// </summary>
     public partial class ChangeCalculator : Form
     {
+        public operation Operation;
+
         #region Constructor
 
         /// <summary>
@@ -28,15 +41,10 @@ namespace ChangeCalculator
         }
 
         #endregion
-     
 
         #region Button Methods
         private void calcBtn_Click(object sender, EventArgs e)
         {
-            // if the total input is empty, show a message box indicating to enter a total amount
-            //if (this.totalInput.Text.Length < this.totalInput.SelectionStart + 1)
-               // MessageBox.Show("Please enter a positive number for your total amount");
-
             CalculateChange();
         }
 
@@ -117,7 +125,7 @@ namespace ChangeCalculator
         #region Outputs
         private void changeOutput_TextChanged(object sender, EventArgs e)
         {
-            
+   
         }
 
         private void tooniesOutput_TextChanged(object sender, EventArgs e)
@@ -152,101 +160,65 @@ namespace ChangeCalculator
         /// </summary>
         private void CalculateChange()
         {
-            OperationType myEnum = (decimal)OperationType.Minus;
-
-            this.changeOutput.Text = ParseOperation();
+            PerformOperation(operation.Subtract);
         }
 
         /// <summary>
-        /// Parses user equation and calculates the result
+        /// operation types
         /// </summary>
-        /// <returns></returns>
-        private string ParseOperation()
+        /// <param name="op"></param>
+        private void PerformOperation(operation op)
         {
-            try
+            switch(Operation)
             {
-                // Get the users inputs
-                var userTotalInput = this.totalInput.Text;
-                var userPaidInput = this.paidInput.Text;
-
-                // Remove all spaces
-                userTotalInput = userTotalInput.Replace(" ", "");
-                userPaidInput = userPaidInput.Replace(" ", "");
-
-                // create a new operation
-                var operation = new Operation();
-                var leftSide = true;
-
-                for(int i = 0; i < userTotalInput.Length; i++)
-                {
-                    if("0123456789.".Any(characters => userTotalInput[i] == characters))
-                    {
-                        if(leftSide)
-                        {
-                            operation.LeftSide += userTotalInput[i];
-                        }
-                    }
-                }
-
-                return string.Empty;
-            }
-            catch(Exception ex)
-            {
-                return $"Invalid equation. {ex.Message}";
+                case operation.Subtract:
+                    paidParse();
+                    break;
+                case operation.Split:
+                    break;
             }
         }
 
+        
         /// <summary>
-        /// Checking for valid characters
+        /// This will parse the two inputs of string into decimal, and then format the operationg to be in currency.
         /// </summary>
-        /// <param name="currentNumber"></param>
-        /// <param name="newCharacter"></param>
-        /// <returns></returns>
-        private string AddNumberPart(string currentNumber, char newCharacter)
+        private void paidParse()
         {
-            // check if there is already a radix in the input
-            if(newCharacter == '.' && currentNumber.Contains('.'))
+            decimal result;
+            CultureInfo culture;
+            string paidTextValue = paidInput.Text;
+            string totalTextValue = totalInput.Text;
+            culture = CultureInfo.CreateSpecificCulture("en-US");
+            if(decimal.TryParse(paidTextValue, NumberStyles.Currency, null, out decimal paidAmount))
             {
-                throw new InvalidOperationException($"Number {currentNumber} already contains a . and another cannot be added");
-            } return currentNumber + newCharacter;
+                paidTextValue = paidAmount.ToString("C");
+            }
+
+            if (decimal.TryParse(totalTextValue, NumberStyles.Currency, null, out decimal totalAmount))
+            {
+                totalTextValue = totalAmount.ToString("C");
+            }
+
+            result = paidAmount - totalAmount; // this would output the decimal of paid - total
+
+            changeOutput.Text = result.ToString(); 
+
+            changeOutput.Text = String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C2}", result);  // this is what converts the decimal of change into 
+            Console.WriteLine(result);
+
+            populateCoins(result);
         }
 
-
-
-        public enum OperationType
+        private void populateCoins(decimal change)
         {
-            /// <summary>
-            /// Find the differance between paid amount and total amount
-            /// </summary>
-            Minus
+            
         }
         #endregion
 
         private void ChangeCalculator_Load(object sender, EventArgs e)
         {
 
-        }
-    }
-
-    public class Operation
-    {
-
-        // left side of operation
-        public string LeftSide { get; set; }
-
-        // right side of operation
-        public string RightSide { get; set; }
-       
-        // type of operation to perform
-        public OperationType OperationType { get; set; }
-
-        public Operation InnerOperation { get; set; }
-
-        // create empty strings instead of nulls
-        public Operation()
-        {
-            this.LeftSide = string.Empty;
-            this.RightSide = string.Empty;
         }
     }
 }
