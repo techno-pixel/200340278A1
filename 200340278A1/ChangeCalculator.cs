@@ -207,12 +207,72 @@ namespace ChangeCalculator
             changeOutput.Text = String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C2}", result);  // this is what converts the decimal of change into 
             Console.WriteLine(result);
 
-            populateCoins(result);
+            populateCoins(result); // this will spread the coin values
         }
 
-        private void populateCoins(decimal change)
+        /// <summary>
+        /// method to dispense coins into largest denominations
+        /// </summary>
+        /// <param name="result"></param>
+        private void populateCoins(decimal result)
         {
+            double newResult = decimal.ToDouble(result); // convert the change into a double
             
+            double newResultDollars = newResult * 100; // multiply by 100. example: 17.38 becomes 1738 ... this allows us to do the rounding below the int conversion
+
+            int newDollarResult = Convert.ToInt32(newResultDollars); // convert to int
+
+
+            // this checks the rounding. 4.98 became 498, mod 5 is 3 (and subsequently mod 10 is 8 anyways) so we add 2 to make it 500
+            if(newDollarResult % 5 == 3 || newDollarResult % 10 == 8)
+            {
+                newDollarResult += 2;
+            } else if (newDollarResult % 5 == 4 || newDollarResult % 10 == 9)
+            {
+                newDollarResult++;
+            } else if (newDollarResult % 5 == 2 || newDollarResult % 10 == 2)
+            {
+                newDollarResult -= 2;
+            } else if (newDollarResult % 5 == 1 || newDollarResult % 10 == 1)
+            {
+                newDollarResult--;
+            } else
+            {
+                // do nothing
+            }
+
+            // convert back to decimal
+            decimal dollarParsed = Convert.ToDecimal(newDollarResult);
+
+            // divide by 100 to get the cent values back
+            dollarParsed = dollarParsed / 100;
+
+            // convert to double so that we can perform the the operations below
+            double res = Convert.ToDouble(dollarParsed);
+            
+            double left = System.Math.Floor(res);
+            double right = (res - left) * 100;
+            int dollars = Convert.ToInt32(left); // split into dollar amount
+            int cents = Convert.ToInt32(right); // split into cents amount
+
+            // below is the arithmetics i came up with so that it spreads the coins
+            int toonies = dollars / 2;
+            int loonies = dollars % 2;
+
+            int quarters = cents / 25;
+            cents = cents % 25;
+
+            int dimes = cents / 10;
+            cents = cents % 10;
+
+            int nickels = cents / 5;
+            
+
+            tooniesOutput.Text = toonies.ToString();
+            looniesOutput.Text = loonies.ToString();
+            quartersOutput.Text = quarters.ToString();
+            dimesOutput.Text = dimes.ToString();
+            nickelOutput.Text = nickels.ToString();
         }
         #endregion
 
