@@ -55,6 +55,7 @@
     <Compile Include="OperationType.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="System\Windows\UI.cs" />
     <EmbeddedResource Include="ChangeCalculator.resx">
       <DependentUpon>ChangeCalculator.cs</DependentUpon>
     </EmbeddedResource>
@@ -67,6 +68,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include=".editorconfig" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

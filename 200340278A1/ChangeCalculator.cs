@@ -16,10 +16,9 @@ namespace ChangeCalculator
     public enum operation
     {
         /// <summary>
-        /// Operation Types
+        /// Operation subtract
         /// </summary>
-        Subtract,
-        Split
+        Subtract
     }
 
     /// <summary>
@@ -45,7 +44,22 @@ namespace ChangeCalculator
         #region Button Methods
         private void calcBtn_Click(object sender, EventArgs e)
         {
-            CalculateChange();
+
+            try
+            {
+                if(String.IsNullOrEmpty(totalInput.Text) || (String.IsNullOrEmpty(paidInput.Text)))
+                {
+                    MessageBox.Show("You need to enter some value in both total and paid");
+                } else
+                {
+                    CalculateChange();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Blergh");
+            }
+
         }
 
         /// <summary>
@@ -174,8 +188,6 @@ namespace ChangeCalculator
                 case operation.Subtract:
                     paidParse();
                     break;
-                case operation.Split:
-                    break;
             }
         }
 
@@ -185,25 +197,29 @@ namespace ChangeCalculator
         /// </summary>
         private void paidParse()
         {
+
             decimal result;
             CultureInfo culture;
             string paidTextValue = paidInput.Text;
             string totalTextValue = totalInput.Text;
             culture = CultureInfo.CreateSpecificCulture("en-US");
+
+            // parse the string into decimal
             if(decimal.TryParse(paidTextValue, NumberStyles.Currency, null, out decimal paidAmount))
             {
                 paidTextValue = paidAmount.ToString("C");
             }
-
+            // parse the string into decimal
             if (decimal.TryParse(totalTextValue, NumberStyles.Currency, null, out decimal totalAmount))
             {
                 totalTextValue = totalAmount.ToString("C");
             }
 
+            // create the change result
             result = paidAmount - totalAmount; // this would output the decimal of paid - total
 
             changeOutput.Text = result.ToString(); 
-
+            // format the change to be currency
             changeOutput.Text = String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C2}", result);  // this is what converts the decimal of change into 
             Console.WriteLine(result);
 
