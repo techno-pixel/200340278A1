@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -27,7 +28,7 @@ namespace ChangeCalculator
     public partial class ChangeCalculator : Form
     {
         public operation Operation;
-
+        // no code
         #region Constructor
 
         /// <summary>
@@ -40,51 +41,11 @@ namespace ChangeCalculator
         }
 
         #endregion
-
-        #region Button Methods
-        private void calcBtn_Click(object sender, EventArgs e)
-        {
-
-            try
-            {
-                if(String.IsNullOrEmpty(totalInput.Text) || (String.IsNullOrEmpty(paidInput.Text)))
-                {
-                    MessageBox.Show("You need to enter some value in both total and paid");
-                } else
-                {
-                    CalculateChange();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Blergh");
-            }
-
-        }
-
-        /// <summary>
-        /// Clears the input and outputs
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void clearBtn_Click(object sender, EventArgs e)
-        {   
-            // clears input and outputs
-            this.totalInput.Text = string.Empty;
-            this.paidInput.Text = string.Empty;
-            this.changeOutput.Text = string.Empty;
-            this.tooniesOutput.Text = string.Empty;
-            this.looniesOutput.Text = string.Empty;
-            this.quartersOutput.Text = string.Empty;
-            this.dimesOutput.Text = string.Empty;
-            this.nickelOutput.Text = string.Empty;
-        }
-        #endregion
-
+        // no code
         #region Inputs
         private void totalInput_TextChanged(object sender, EventArgs e)
         {
-            
+
         }
 
         private void paidInput_TextChanged(object sender, EventArgs e)
@@ -92,7 +53,7 @@ namespace ChangeCalculator
             
         }
         #endregion
-
+        // no code
         #region Labels
         private void total_Click(object sender, EventArgs e)
         {
@@ -135,7 +96,7 @@ namespace ChangeCalculator
         }
 
         #endregion
-
+        // no code
         #region Outputs
         private void changeOutput_TextChanged(object sender, EventArgs e)
         {
@@ -168,6 +129,53 @@ namespace ChangeCalculator
         }
         #endregion
 
+        // Has code
+        #region Button Methods
+        private void calcBtn_Click(object sender, EventArgs e)
+        {
+            // Checking the inputs to make sure they are values that the form accepts (only positive, one decimal point, only numbers)
+            try
+            {
+
+                if (String.IsNullOrEmpty(totalInput.Text) || (String.IsNullOrEmpty(paidInput.Text))) // if either total or paid is empty, show message
+                {
+                    MessageBox.Show("You need to enter some value in both total and paid");
+                }
+                else if (!Regex.IsMatch(totalInput.Text, @"^\d+([\.\,]?\d+)?$") || !Regex.IsMatch(paidInput.Text, @"^\d+([\.\,]?\d+)?$")) // regex to allow only positive numbers and one decimal point
+                {
+                    throw new ApplicationException("Please enter only numbers/decimals.");
+                }
+                else
+                {
+                    CalculateChange(); // if everything passes, calculate
+                }
+            }
+            catch (ApplicationException) // catch the exception to not break the program
+            {
+                MessageBox.Show("Please enter only numbers/decimals.");
+            }
+        }
+
+        /// <summary>
+        /// Clears the input and outputs
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void clearBtn_Click(object sender, EventArgs e)
+        {
+            // clears input and outputs
+            this.totalInput.Text = string.Empty;
+            this.paidInput.Text = string.Empty;
+            this.changeOutput.Text = string.Empty;
+            this.tooniesOutput.Text = string.Empty;
+            this.looniesOutput.Text = string.Empty;
+            this.quartersOutput.Text = string.Empty;
+            this.dimesOutput.Text = string.Empty;
+            this.nickelOutput.Text = string.Empty;
+        }
+        #endregion
+
+        // Has code
         #region Other Methods
         /// <summary>
         /// Calculates the total and paid amount to dispense change
@@ -209,6 +217,7 @@ namespace ChangeCalculator
             {
                 paidTextValue = paidAmount.ToString("C");
             }
+
             // parse the string into decimal
             if (decimal.TryParse(totalTextValue, NumberStyles.Currency, null, out decimal totalAmount))
             {
@@ -217,6 +226,11 @@ namespace ChangeCalculator
 
             // create the change result
             result = paidAmount - totalAmount; // this would output the decimal of paid - total
+
+            if(result < 0)
+            {
+                MessageBox.Show("You did not have enough to cover the total. You are still missing: " + result*-1);
+            }
 
             changeOutput.Text = result.ToString(); 
             // format the change to be currency
